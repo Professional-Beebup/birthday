@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jacob's Birthday Wishlist</title>
+    <!-- Import Google Font for a fun look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Added Bungee and Nunito, Removed Fredoka -->
+    <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Modern Reset & Base Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Nunito', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            /* The requested Blue Background */
+            background-color: #3b82f6; 
+            background-image: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+            color: #1f2937;
+            min-height: 100vh;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden; /* Prevent scrollbar from spinning star */
+        }
+
+        /* Header Styles */
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 10;
+        }
+
+        header h1 {
+            /* Changed to Bungee */
+            font-family: 'Bungee', cursive;
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            font-weight: 400; /* Bungee is naturally thick */
+            letter-spacing: 0.02em;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        /* =========================================
+           SPOTLIGHT SECTION (New Big Card)
+           ========================================= */
+        .spotlight-section {
+            position: relative;
+            width: 100%;
+            /* Reduced max-width to make card smaller relative to star */
+            max-width: 450px; 
+            margin: 2rem 0 5rem 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 5;
+        }
+
+        /* The Animated Star Container */
+        .star-background {
+            position: absolute;
+            width: 850px; /* Slightly larger for the detailed SVG */
+            height: 850px;
+            z-index: -1;
+            /* Center the star behind the card */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            
+            /* Apply SPIN animation here */
+            animation: spin 20s linear infinite; /* Slowed down slightly for the complex shape */
+        }
+
+        /* The Star Shape SVG */
+        .star-shape-svg {
+            width: 100%;
+            height: 100%;
+            opacity: 0.9; /* Increased opacity slightly for brighter look */
+            /* SVG Shadow for glow */
+            filter: drop-shadow(0 0 20px rgba(253, 224, 71, 0.6));
+            
+            /* Apply PULSE animation here */
+            animation: pulse 1.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes spin {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.9); }
+            100% { transform: scale(1.1); }
+        }
+
+        /* Spotlight Link Wrapper */
+        .spotlight-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            width: 100%;
+            transition: transform 0.3s ease;
+        }
+
+        .spotlight-link:hover {
+            transform: translateY(-5px) scale(1.02);
+        }
+
+        /* The Spotlight Card itself */
+        .spotlight-card {
+            background: white;
+            border-radius: 24px;
+            padding: 0;
+            width: 100%;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+            border: 4px solid #fde047; /* Brighter Yellow border */
+            transform-style: preserve-3d;
+        }
+
+        .spotlight-image-container {
+            height: 300px; /* Slightly smaller image area */
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .spotlight-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .spotlight-content {
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .spotlight-badge {
+            background: #ef4444;
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 800;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            display: inline-block;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(239, 68, 68, 0.5);
+        }
+
+        .spotlight-title {
+            /* Changed to Nunito */
+            font-family: 'Nunito', sans-serif;
+            font-weight: 800;
+            font-size: 2.2rem;
+            color: #111827;
+            margin-bottom: 0.5rem;
+            line-height: 1.1;
+        }
+
+        .spotlight-desc {
+            color: #6b7280;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .spotlight-price {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #2563eb;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .spotlight-cta {
+            font-size: 0.9rem;
+            color: #2563eb;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 1rem;
+            display: block;
+        }
+
+
+        /* =========================================
+           Standard Grid Layout (Existing)
+           ========================================= */
+        .grid-container {
+            display: grid;
+            width: 100%;
+            max-width: 1200px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            padding-bottom: 3rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Card Styles */
+        .card-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .card {
+            background-color: #ffffff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            
+            /* Scroll Animation Initial State */
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out, box-shadow 0.2s ease;
+        }
+
+        /* The class added by JS when the element is visible */
+        .card.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .card:hover {
+            transform: translateY(-5px) !important; /* Override scroll transform logic on hover */
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        /* Image Area */
+        .card-image-container {
+            width: 100%;
+            height: 220px;
+            background-color: #f3f4f6;
+            position: relative;
+        }
+
+        .card-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Card Content */
+        .card-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Badge Styles */
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: white;
+            margin-bottom: 0.5rem;
+            align-self: flex-start;
+        }
+
+        .card-title {
+            /* Changed to Nunito */
+            font-family: 'Nunito', sans-serif;
+            font-size: 1.35rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #111827;
+            line-height: 1.3;
+        }
+
+        .card-price {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #2563eb; 
+            margin-top: auto;
+            padding-top: 1rem;
+        }
+
+        .external-icon {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: white;
+            border-radius: 50%;
+            padding: 0.5rem;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.2s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .card:hover .external-icon {
+            opacity: 1;
+        }
+
+        /* Calculator Section */
+        .calculator-section {
+            width: 100%;
+            max-width: 800px;
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 2;
+        }
+
+        .calculator-header {
+            font-family: 'Nunito', sans-serif;
+            font-weight: 800;
+            font-size: 2rem;
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .calc-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 640px) {
+            .calc-inputs {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .input-group label {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #4b5563;
+        }
+
+        select, input, button {
+            padding: 0.75rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            width: 100%;
+            font-family: inherit;
+        }
+
+        button {
+            background-color: #2563eb;
+            color: white;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 0.5rem;
+        }
+
+        button:hover {
+            background-color: #1d4ed8;
+        }
+
+        .calc-list {
+            list-style: none;
+            border-top: 2px solid #f3f4f6;
+            margin-top: 1rem;
+            padding-top: 1rem;
+        }
+
+        .calc-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .total-display {
+            font-size: 1.5rem;
+            font-weight: 800;
+            text-align: right;
+            margin-top: 1.5rem;
+            color: #2563eb;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: auto;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+            text-align: center;
+            z-index: 2;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Jacob's Birthday List</h1>
+        <p>Hello everyone, welcome to my birthday list! -Jacob</p>
+    </header>
+
+    <!-- NEW SPOTLIGHT SECTION -->
+    <section class="spotlight-section">
+        <!-- The Animated Star Background -->
+        <div class="star-background">
+            <svg class="star-shape-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1246.95 1206.6">
+                <defs>
+                    <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <!-- Switched to Brighter Yellow/Gold -->
+                        <stop offset="0%" style="stop-color:#fde047;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#eab308;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+                <path fill="url(#goldGradient)" d="M474.19,153.81l-44-53.1c-24.2-29.2-44.3-53.6-44.7-54.2s-.9-.9-1.1-.7c-.3.3,3.3,32.9,7.9,72.5s8.3,72.9,8.4,74c0,1.4-18.4-5.5-18.6-5.5-.4,0-74.8-60.3-98.9-80.1-3.8-3.2-7.1-5.7-7.2-5.6-.1.2,10.2,31.7,22.8,70.1s22.8,70.1,22.5,70.3c-.2.3-21.6-3.3-21.8-3.2-.2.2-26.6-13.6-58.7-30.6-32-17.1-58.4-30.9-58.6-30.7-.3.2,15.6,28.4,35.1,62.7s35.4,62.5,35.2,62.7c-.2.1-20.1,4-20.2,4.2-.2.1-6.8-1.7-14.7-4.2-14.8-4.5-108.8-33.3-112.4-34.3-1.4-.4-.2,1.5,3.6,5.8,75.6,86.8,86.9,100.1,84.8,99.6-1.3-.3-9.4,13.2-9.4,13.2l-5-.5c-106.8-11.4-133-14.2-133.2-14-.1.1,34.6,27.1,99.6,77.4l5.6,4.3s2.4,18.4,2.5,18.9c0,.3-31.8,3.1-70.7,6.3-39,3.2-71.2,6-71.8,6.1-.5.1,24.4,13,55.4,28.7l56.3,28.4,21.3,19.8-8,2.2C76.79,580.91,1.79,602.01.29,602.61c-2,.8,4.8,2.9,74.4,22.3,19.5,5.5,36.2,10.2,37,10.5,1,.4,38.2,14.3,38.4,14.5s-31,16.1-69.4,35.4c-38.5,19.2-69.9,35.3-69.9,35.6-.1.3,3.8.9,8.7,1.2,19.2,1.3,104.7,8.8,105.1,9.2.2.3,39.2,3,42.5,3.4l5.8.6-15.8,12.5c-8.8,7-37.4,29.2-63.6,49.5-26.3,20.3-47.7,37-47.5,37,.1.1,6.1-.4,13.2-1.2,141.1-14.9,147.6-15.6,148-15.1.6.5-12.9,16.3-60.3,70.8-23.7,27.2-43,49.5-42.9,49.7.2.1,4.5-1.1,9.7-2.7,5.2-1.5,33.1-10,62-18.9,51-15.5,82.9-25.1,83.5-25.1.7,0-74.4,132.8-76.8,135.8-3.3,4.1,1.7,1.6,79.3-39.8,47.5-25.4,63-33.3,62.6-31.8-.3.7-2.6,8-5.1,16.3-4,13-41.7,128.3-43.3,132.3-.5,1.5,6.9-4.4,57.8-45.8,62.9-51.2,68.1-55.2,67.6-52.8-.3,1.3-1.3,9.7-2.1,18.8s-4.6,43.3-8.4,76-6.7,59.6-6.6,59.8c.2.3,29.2-34.4,73.2-87.6,14.6-17.6,29.8-30.4,30.1-27.7.1,1.7,1.1,12.2,2.2,23.5s4,43.7,6.5,72,4.6,52.4,4.8,53.5c.1,1.4,1.3-.1,3.6-4.5,1.8-3.6,4.4-8.3,5.6-10.5,1.3-2.2,15.2-28.1,31-57.5s29.1-53.9,29.6-54.4c.5-.6,10.2-.1,10.2-.1l1.7,6c7.2,24.2,40.1,132.9,40.4,133.2.5.5.2,1.4,24.3-78.9,10.8-36.2,20-65.5,20.4-65,.4.4,14.3,15.8,60,101.2l17.4,32.4,1.1-11.4c.6-6.3,3.8-41.3,7-77.7,3.2-36.5,6.1-66.3,6.4-66.3.3.1,19.1,20.9,19.8,21.4.7.4,19.2,22.5,41.3,49.2,22.1,26.6,40.6,48.7,41.1,49,.6.4.8-.5.5-2.2-.3-1.6-.8-5.4-1.1-8.4-1-9.1-15.5-137.2-16-140.8l-.5-3.3,3.7,3.2c2,1.7,25.1,18.8,26.8,19.8,1.1.6,22.8,18.1,48.4,39,25.6,20.8,46.6,37.8,46.7,37.7.2-.1-9-28.3-20.2-62.7-11.3-34.3-22.1-67.3-23.9-73.2l-3.4-10.8,3.6,2.3c2.1,1.2,30.2,12.7,30.2,12.4,0-.2,2.4.8,5.3,2.4,2.8,1.5,26.9,14.3,53.5,28.5,26.6,14.1,48.6,25.5,48.8,25.2.2-.2-7.8-14.7-17.8-32.3-29.5-51.9-54.8-96.6-54.8-96.9,0-.1,32.3,2.9,32.4,2.8.2-.3,18.2,5.2,80,24.1,20.8,6.4,38,11.5,38.2,11.3s-4.7-6.1-10.9-13.3c-58.2-66.8-73.9-84.9-77.5-89.1l-4.1-5,21.4-10.4,4.5.6c2.5.3,29.9,3.2,61,6.5s58.2,6.2,60.4,6.4c3.2.4,3.6.2,2.5-.8-.8-.7-23-18-49.4-38.4s-49.5-38.4-51.3-39.9l-3.4-2.8,3.2-19.2,4.7-.6c2.7-.3,33.5-3,68.6-5.9,35-2.9,63.7-5.5,63.6-5.8s-24.8-12.9-55-28c-43.6-21.8-73.8-49.5-73.6-49.6.1-.1,29.2-8.3,64.7-18.3,77.4-21.6,77.1-21.5,74.5-22.4-1.1-.3-24.7-7-52.5-14.7-27.8-7.8-52-14.6-53.9-15.2l-3.4-1-39.4-15.9,68.6-34.5c37.7-19,68.9-34.9,69.4-35.3.4-.4-23.5-2.7-53-5.1-29.6-2.4-54-4.5-54.2-4.7-.3-.2-46.2-3.8-49.3-4.2l-5.7-.6,60-46.5c33-25.6,61.8-47.8,63.9-49.4,2.2-1.6,3.9-3.1,3.7-3.2-.1-.1-20.9,2-46.2,4.7-68.6,7.3-112.4,11.9-114.6,11.9-1.3,0,8.2-11.5,31.9-38.7,51.4-59,71-81.8,70.7-82.1-.1-.2-20.2,5.8-44.6,13.3s-52.3,16-61.9,19c-32.4,9.9-48.3,14.6-48.6,14.3-.2-.2,10.1-18.6,22.7-40.8,40.5-71.1,54.8-96.4,54.4-96.8-.2-.2-29.5,15.1-65.2,34.1-72.6,38.6-77.3,41-77.3,40,0-.5,11-34.3,24.5-75.3,13.4-40.9,24.3-74.5,24.2-74.6s-19.5,15.5-43.2,34.8c-61.9,50.4-82.5,67-82.5,66.5,0-.3,3.4-29.9,7.5-65.8,4-36,8-71,8.8-77.9s1.3-12.7,1.1-12.9-1.3.7-2.3,2.1c-1.1,1.4-23.9,28.9-50.7,61.3-39.6,47.7-48.9,58.5-49.5,56.9-.4-1-1.5-10.9-2.4-21.9-1.6-19.6-11.3-128.1-11.8-132-.1-1.1-13.9,23.5-32.2,57.7-17.6,32.8-40,67.6-43.7,76.8-.8,2.1-3.3-5.3-16.4-49C634.09,34.41,623.69.51,623.29.01c-.2-.2-1,1.8-1.8,4.5-13.2,44.6-39.3,130.3-39.8,130.3-.3,0-9.7,7.3-9.7,7.3l-8-14.9c-4.4-8.2-20.3-37.8-35.4-65.9-15-28-27.5-50.3-27.6-49.5s-3,33-6.3,71.5c-3.4,38.5-6.4,70.8-6.8,71.7"/>
+            </svg>
+        </div>
+        
+        <!-- The Big Card -->
+        <a href="https://www.breville.com" target="_blank" class="spotlight-link">
+            <article class="spotlight-card">
+                <div class="spotlight-image-container">
+                    <img src="https://s7d1.scene7.com/is/image/canon/5666C011_eos-r6-mark-ii-rf24-105mm-f4-l-is-usm_primary?fmt=webp-alpha&wid=800" alt="EOS R6 Mark II RF24-105mm F4 L IS USM Lens Kit" class="spotlight-image">
+                </div>
+                <div class="spotlight-content">
+                    <span class="spotlight-badge">Sale</span>
+                    <h2 class="spotlight-title">EOS R6 Mark II RF24-105mm F4 L IS USM Lens Kit</h2>
+                    <span class="spotlight-price">$3,249.00</span>
+                    <span class="spotlight-cta">Jacob will contribute up to $1000, bringing the price down to $2,249.00</span>
+                </div>
+            </article>
+        </a>
+    </section>
+
+    <!-- Wishlist Grid -->
+    <main class="grid-container" id="list-container">
+        <!-- Items are added here via JavaScript -->
+    </main>
+
+    <!-- Gift Calculator Section -->
+    <section class="calculator-section">
+        <h2 class="calculator-header">Gift Calculator</h2>
+        
+        <div class="calc-inputs">
+            <!-- Add from List -->
+            <div class="input-group">
+                <label>Add item from wishlist</label>
+                <select id="wishlist-select">
+                    <option value="">Select an item...</option>
+                </select>
+                <button onclick="addFromList()">Add to Bundle</button>
+            </div>
+
+            <!-- Add Custom -->
+            <div class="input-group">
+                <label>Add custom item</label>
+                <input type="text" id="custom-name" placeholder="Item name">
+                <input type="number" id="custom-price" placeholder="Price ($)" step="0.01">
+                <button onclick="addCustom()">Add Custom Item</button>
+            </div>
+        </div>
+
+        <ul class="calc-list" id="calc-list">
+            <!-- Calculated items go here -->
+        </ul>
+        
+        <div class="total-display" id="total-display">Total: $0.00</div>
+    </section>
+
+    <script>
+        // ==========================================
+        // CONFIGURATION: EDIT ITEMS HERE
+        // Add "badge: { text: '...', color: '...' }" for colored labels
+        // Note: Espresso Machine moved to spotlight manually
+        // ==========================================
+        const wishlistItems = [
+            {
+                title: "Lexar 256GB 2 Pack Blue Micro SD Card",
+                price: "$89.99",
+                image: "https://m.media-amazon.com/images/I/716Gq-elRDL._AC_SX679_PIbundle-2,TopRight,0,0_SH20_.jpg",
+                link: "https://www.amazon.com/Lexar-128GB-microSDXC-Memory-Adapter/dp/B0DRVVJ92H/ref=sr_1_2?crid=1V6Z8X1LW6BCQ&dib=eyJ2IjoiMSJ9.AtrSntln_EcqEsCFiU22doS8O-qwDO3DFQ4LpZOksEwuXNBLR74-BHBCY-9pi5zzWcGWXIFdWnFIFxUUufOLEO_JBKVVAxhx1eqvW-SXNDQ5X1XwXX0ECNWTlVs6xAo7hF4FNjZwiY5zMFS75jPvk1foPHuH3IY_Ny5YGSO9EtILjFViLpICxCeGtqHi3_8JYt_4OBA_3EE4jmgxD-C-YisaNfa8gcA3SxmLGW2BCbtH06tYKuRk40iA1PmQ2q1I5UnW6rUWuSl1MlvsubQmxteegTkZGwCIKcvlVf-_KMQ.HSs0e6J-_zNmMXLYxAF0cvBYfaQx0fdvzx4kfsJEit8&dib_tag=se&keywords=lexar%2Bmicro%2Bsd%2Bcard%2Bultra%2Bfast&qid=1766812490&refinements=p_n_feature_ten_browse-bin%3A13203834011&rnid=6518301011&s=electronics&sprefix=lexar%2Bmicro%2Bsd%2Bcard%2Bultra%2Bfast%2Celectronics%2C167&sr=1-2&th=1",
+            },
+            {
+                title: "iPhone 13 Carbon Fiber Case",
+                price: "$53.00",
+                image: "https://apexcarbonusa.com/cdn/shop/files/Blackcarbon.jpg?v=1757908128&width=1346",
+                link: "https://apexcarbonusa.com/products/carbon-fiber-iphone-case?variant=44931195404503",
+                badge: { text: "Sale", color: "#ef4444" } // Red color
+            }
+        ];
+        // You can add stuff like ultra-fast sd cards, camera accessories, adapters, etc to bday list, beside, obviously, the star: the r6 mark ii:)
+        // ==========================================
+        // RENDER LOGIC
+        // ==========================================
+        
+        const container = document.getElementById('list-container');
+        const wishlistSelect = document.getElementById('wishlist-select');
+
+        // Function to create the HTML for a single card
+        function createCard(item) {
+            let badgeHtml = '';
+            // If the item has a badge property, create the span
+            if (item.badge) {
+                badgeHtml = `<span class="badge" style="background-color: ${item.badge.color}">${item.badge.text}</span>`;
+            }
+
+            return `
+                <a href="${item.link}" target="_blank" class="card-link" aria-label="Buy ${item.title}">
+                    <article class="card">
+                        <div class="card-image-container">
+                            <img src="${item.image}" alt="${item.title}" class="card-image">
+                            <div class="external-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
+                                    <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            ${badgeHtml}
+                            <h2 class="card-title">${item.title}</h2>
+                            <p class="card-price">${item.price}</p>
+                        </div>
+                    </article>
+                </a>
+            `;
+        }
+
+        // Render the items
+        function renderList() {
+            let html = '';
+            wishlistItems.forEach(item => {
+                html += createCard(item);
+                
+                // Populate the dropdown for the calculator
+                const option = document.createElement("option");
+                option.text = `${item.title} (${item.price})`;
+                option.value = JSON.stringify({ title: item.title, price: item.price });
+                wishlistSelect.add(option);
+            });
+            container.innerHTML = html;
+            
+            // Also add the Spotlight Item to the calculator dropdown manually
+            const spotlightTitle = "Breville Espresso Machine";
+            const spotlightPrice = "$450.00";
+            const spotOption = document.createElement("option");
+            spotOption.text = `тнР ${spotlightTitle} (${spotlightPrice})`;
+            spotOption.value = JSON.stringify({ title: spotlightTitle, price: spotlightPrice });
+            // Add it at the top
+            wishlistSelect.add(spotOption, 1);
+
+            // Trigger Animation Setup after render
+            setupAnimations();
+        }
+
+        // ==========================================
+        // ANIMATION LOGIC
+        // ==========================================
+        function setupAnimations() {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target); // Only animate once
+                    }
+                });
+            }, observerOptions);
+
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                observer.observe(card);
+            });
+        }
+
+        // ==========================================
+        // CALCULATOR LOGIC
+        // ==========================================
+        let calculatorTotal = 0;
+
+        function parsePrice(priceString) {
+            // Remove '$' and commas, then convert to float
+            return parseFloat(priceString.replace(/[^0-9.]/g, ''));
+        }
+
+        function addToCalculatorList(name, price) {
+            // Update Logic
+            calculatorTotal += price;
+            
+            // Update UI - List
+            const list = document.getElementById('calc-list');
+            const li = document.createElement('li');
+            li.className = 'calc-item';
+            li.innerHTML = `<span>${name}</span> <span>$${price.toFixed(2)}</span>`;
+            list.appendChild(li);
+
+            // Update UI - Total
+            document.getElementById('total-display').innerText = `Total: $${calculatorTotal.toFixed(2)}`;
+        }
+
+        function addFromList() {
+            const select = document.getElementById('wishlist-select');
+            const value = select.value;
+            
+            if (!value) return; // Nothing selected
+            
+            const item = JSON.parse(value);
+            const price = parsePrice(item.price);
+            
+            addToCalculatorList(item.title, price);
+        }
+
+        function addCustom() {
+            const nameInput = document.getElementById('custom-name');
+            const priceInput = document.getElementById('custom-price');
+            
+            const name = nameInput.value.trim();
+            const price = parseFloat(priceInput.value);
+
+            if (name && !isNaN(price)) {
+                addToCalculatorList(name, price);
+                // Clear inputs
+                nameInput.value = '';
+                priceInput.value = '';
+            } else {
+                alert("Please enter a valid name and price.");
+            }
+        }
+
+        // Initialize
+        renderList();
+    </script>
+</body>
+</html>
