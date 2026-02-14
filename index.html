@@ -417,11 +417,86 @@
             color: #2563eb;
         }
 
+        /* Countdown Section */
+        .countdown-section {
+            width: 100%;
+            max-width: 800px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 24px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 20px 35px -15px rgba(15, 23, 42, 0.4);
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            border: 3px solid #fde047;
+        }
+
+        .countdown-heading {
+            font-family: 'Nunito', sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+        }
+
+        .countdown-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 1rem;
+        }
+
+        .countdown-box {
+            background: linear-gradient(135deg, #1d4ed8, #3b82f6);
+            color: white;
+            border-radius: 20px;
+            padding: 1.5rem 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .countdown-box::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top, rgba(253, 224, 71, 0.4), transparent 60%);
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .countdown-value {
+            font-family: 'Bungee', cursive;
+            font-size: 2.5rem;
+            margin-bottom: 0.25rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .countdown-label {
+            font-size: 0.95rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .countdown-note {
+            margin-top: 1.25rem;
+            font-size: 0.95rem;
+            color: #4b5563;
+        }
+
         /* Footer */
         footer {
             margin-top: auto;
             color: rgba(255, 255, 255, 0.8);
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             text-align: center;
             z-index: 2;
         }
@@ -501,8 +576,31 @@
         <div class="total-display" id="total-display">Total: $0.00</div>
     </section>
 
+    <section class="countdown-section" aria-live="polite">
+        <h2 class="countdown-heading">Countdown to March 26</h2>
+        <div class="countdown-grid">
+            <div class="countdown-box">
+                <span class="countdown-value" id="countdown-weeks">00</span>
+                <span class="countdown-label">Weeks</span>
+            </div>
+            <div class="countdown-box">
+                <span class="countdown-value" id="countdown-days">00</span>
+                <span class="countdown-label">Days</span>
+            </div>
+            <div class="countdown-box">
+                <span class="countdown-value" id="countdown-hours">00</span>
+                <span class="countdown-label">Hours</span>
+            </div>
+            <div class="countdown-box">
+                <span class="countdown-value" id="countdown-seconds">00</span>
+                <span class="countdown-label">Seconds</span>
+            </div>
+        </div>
+        <p class="countdown-note">Tracking Jacob's birthday countdown in your local timezone.</p>
+    </section>
+
     <footer>
-        *Jacob will contribute up to $1,000 toward the purchase of the item. His contribution will be limited to the funds he has available at the time of purchase; if his available funds are below $1,000, he is only responsible for the amount he has. No additional purchase or payment is required. Offer ends on 3/26/26.
+        *Jacob will contribute up to $1,000 toward the purchase of the R6 Mark II. His contribution will be limited to the funds he has available at the time of purchase; if his available funds are below $1,000, he is only responsible for the amount he has. No additional purchase or payment is required. Offer ends on 3/26/26.
     </footer>
 
     <script>
@@ -672,6 +770,62 @@
 
         // Initialize
         renderList();
+
+        // ==========================================
+        // COUNTDOWN LOGIC
+        // ==========================================
+        const countdownTargets = {
+            weeks: document.getElementById('countdown-weeks'),
+            days: document.getElementById('countdown-days'),
+            hours: document.getElementById('countdown-hours'),
+            seconds: document.getElementById('countdown-seconds')
+        };
+
+        function getNextMarch26() {
+            const now = new Date();
+            let target = new Date(now.getFullYear(), 2, 26, 0, 0, 0);
+            if (target < now) {
+                target = new Date(now.getFullYear() + 1, 2, 26, 0, 0, 0);
+            }
+            return target;
+        }
+
+        let countdownTargetDate = getNextMarch26();
+
+        function updateCountdown() {
+            const now = new Date();
+            let diff = countdownTargetDate - now;
+
+            if (diff <= 0) {
+                diff = 0;
+                countdownTargetDate = getNextMarch26();
+            }
+
+            const totalSeconds = Math.floor(diff / 1000);
+            const secondsInDay = 24 * 60 * 60;
+            const secondsInWeek = 7 * secondsInDay;
+
+            const weeks = Math.floor(totalSeconds / secondsInWeek);
+            let remainder = totalSeconds % secondsInWeek;
+
+            const days = Math.floor(remainder / secondsInDay);
+            remainder %= secondsInDay;
+
+            const hours = Math.floor(remainder / 3600);
+            remainder %= 3600;
+
+            const seconds = remainder % 60;
+
+            const formatValue = (value, pad = 2) => value.toString().padStart(pad, '0');
+
+            countdownTargets.weeks.textContent = formatValue(weeks);
+            countdownTargets.days.textContent = formatValue(days);
+            countdownTargets.hours.textContent = formatValue(hours);
+            countdownTargets.seconds.textContent = formatValue(seconds);
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
     </script>
 </body>
 </html>
