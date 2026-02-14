@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jacob's Birthday Wishlist</title>
+    <title>Jacob's Birthday List</title>
     <!-- Import Google Font for a fun look -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -631,7 +631,13 @@
                 title: "Lexar 256GB 2 Pack Blue Micro SD Card",
                 price: "$89.99",
                 image: "https://m.media-amazon.com/images/I/716Gq-elRDL._AC_SX679_PIbundle-2,TopRight,0,0_SH20_.jpg",
-                link: "https://www.amazon.com/Lexar-128GB-microSDXC-Memory-Adapter/dp/B0DRVVJ92H/ref=sr_1_2?crid=1V6Z8X1LW6BCQ&dib=eyJ2IjoiMSJ9.AtrSntln_EcqEsCFiU22doS8O-qwDO3DFQ4LpZOksEwuXNBLR74-BHBCY-9pi5zzWcGWXIFdWnFIFxUUufOLEO_JBKVVAxhx1eqvW-SXNDQ5X1XwXX0ECNWTlVs6xAo7hF4FNjZwiY5zMFS75jPvk1foPHuH3IY_Ny5YGSO9EtILjFViLpICxCeGtqHi3_8JYt_4OBA_3EE4jmgxD-C-YisaNfa8gcA3SxmLGW2BCbtH06tYKuRk40iA1PmQ2q1I5UnW6rUWuSl1MlvsubQmxteegTkZGwCIKcvlVf-_KMQ.HSs0e6J-_zNmMXLYxAF0cvBYfaQx0fdvzx4kfsJEit8&dib_tag=se&keywords=lexar%2Bmicro%2Bsd%2Bcard%2Bultra%2Bfast&qid=1766812490&refinements=p_n_feature_ten_browse-bin%3A13203834011&rnid=6518301011&s=electronics&sprefix=lexar%2Bmicro%2Bsd%2Bcard%2Bultra%2Bfast%2Celectronics%2C167&sr=1-2&th=1",
+                link: "https://www.amazon.com/Lexar-128GB-microSDXC-Memory-Adapter/dp/B0DRVVJ92H/ref=sr_1_2?crid=1V6Z8X1LW6BCQ&dib=eyJ2IjoiMSJ9.AtrSntln_EcqEsCFiU22doS8O-qwDO3DFQ4LpZOksEwuXNBLR74-BHBCY-9pi5zzWcGWXIFdWnFIFxUUufOLEO_JBKVVAxhx1eqvW-SXNDQ5X1XwXX0ECNWTlVs6xAo7hF4FNjZwiY5zMFS75jPvk1foPHuH3IY_Ny5YGSO9EtILjFViLpICxCeGtqHi3_8JYt_4OBA_3EE4jmgxD-C-YisaNfa8gcA3SxmLGW2BCbtH06tYKuRk40iA1PmQ2q1I5UnW6rUWuSl1MlvsubQmxteegTkZGwCIKcvlVf-_KMQ.HSs0e6J-_zNmMXLYxAF0cvBYfaQx0fdvzx4kfsJEit8&dib_tag=se&keywords=lexar%2Bmicro%2Bsd%2Bcard%2Bultra%2Bfast&qid=1766812490&refinements=p_n_feature_ten_browse-bin%3A13203834011&rnid=6518301011&s=electronics&sprefix=lexar%2Bmicro%2Bsd%2Bcard%2Bultra%2Bfast%2Celectronics%2C167&sr=1-2&th=1"
+            },
+            {
+                title: "Battery Pack LP-E6P (For R6 Mark II)",
+                price: "$79.99",
+                image: "https://s7d1.scene7.com/is/image/canon/6537C001?fmt=webp-alpha&wid=800",
+                link: "https://www.usa.canon.com/shop/p/battery-pack-lp-e6p?gclsrc=aw.ds&gad_source=1&gad_campaignid=22705535000&gbraid=0AAAAADxAOrwiOxiTAKZ_LUEatfHUfTTzz&gclid=Cj0KCQiA18DMBhDeARIsABtYwT0XevpIX_DLA2R_gCthHpRE0X4cfdLV9UMOkBSxG2NSbsCFUgy3mrUaAjr_EALw_wcB"
             },
             {
                 title: "iPhone 13 Carbon Fiber Case",
@@ -693,13 +699,13 @@
             });
             container.innerHTML = html;
             
-            // Also add the Spotlight Item to the calculator dropdown manually
-            const spotlightTitle = "Breville Espresso Machine";
-            const spotlightPrice = "$450.00";
+            // Also add the Spotlight Item (camera) to the calculator dropdown manually
+            const spotlightTitle = "EOS R6 Mark II RF24-105mm F4 L IS USM Lens Kit";
+            const spotlightPrice = "$2,249.00";
             const spotOption = document.createElement("option");
-            spotOption.text = `тнР ${spotlightTitle} (${spotlightPrice})`;
+            spotOption.text = `${spotlightTitle} (${spotlightPrice})`;
             spotOption.value = JSON.stringify({ title: spotlightTitle, price: spotlightPrice });
-            // Add it at the top
+            // Insert it near the top of the list
             wishlistSelect.add(spotOption, 1);
 
             // Trigger Animation Setup after render
