@@ -184,11 +184,28 @@
         }
 
         .spotlight-price {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Original (pre-sale) price */
+        .original-price {
+            font-size: 1rem;
+            color: #6b7280;
+            text-decoration: line-through;
+            margin-right: 0.6rem;
+            display: inline-block;
+            vertical-align: middle;
+            font-weight: 700;
+        }
+
+        /* Discounted / sale price */
+        .discounted-price {
             font-size: 2rem;
             font-weight: 800;
             color: #2563eb;
-            margin-bottom: 0.5rem;
-            display: block;
+            display: inline-block;
+            vertical-align: middle;
         }
 
         .spotlight-cta {
@@ -534,7 +551,7 @@
                 <div class="spotlight-content">
                     <span class="spotlight-badge">Sale</span>
                     <h2 class="spotlight-title">EOS R6 Mark II RF24-105mm F4 L IS USM Lens Kit</h2>
-                    <span class="spotlight-price">$3,249.00</span>
+                    <span class="spotlight-price"><span class="original-price">$3,249.00</span><span class="discounted-price">$2,249</span></span>
                     <span class="spotlight-cta">Jacob will contribute up to $1000, bringing the price down to $2,249*</span>
                 </div>
             </article>
@@ -596,7 +613,7 @@
                 <span class="countdown-label">Seconds</span>
             </div>
         </div>
-        <p class="countdown-note">Tracking Jacob's birthday countdown in your local timezone.</p>
+        <p class="countdown-note">Tracking Jacob's birthday countdown</p>
     </section>
 
     <footer>
